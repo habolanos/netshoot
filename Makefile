@@ -1,8 +1,8 @@
 .PHONY: build-x86 build-arm64 push all
 
 # Build Vars
-IMAGENAME=nicolaka/netshoot
-VERSION=0.1
+IMAGENAME=habolanos/netshoot
+VERSION=1.0.0
 
 
 .DEFAULT_GOAL := all
@@ -16,6 +16,3 @@ build-all:
 push:
 	 	@docker push ${IMAGENAME}:${VERSION} 
 all: build-all push
-
-
-		
