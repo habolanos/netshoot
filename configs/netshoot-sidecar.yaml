@@ -22,4 +22,4 @@ spec:
         - name: netshoot
           image: habolanos/netshoot
           command: ["/bin/bash"]
-          args: ["-c", "while true; do ping localhost; sleep 60;done"]
+          args: ["-c", "while true; do ping localhost; sleep 1800;done"]
