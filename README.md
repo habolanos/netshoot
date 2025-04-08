@@ -68,32 +68,33 @@ services:
 * if you want to use netshoot as a sidecar container to troubleshoot your application container
 
  ```
-    $ cat netshoot-sidecar.yaml
-    apiVersion: apps/v1
-    kind: Deployment
+$ cat netshoot-sidecar.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-netshoot
+  labels:
+    app: nginx-netshoot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-netshoot
+  template:
     metadata:
-        name: nginx-netshoot
-        labels:
-            app: nginx-netshoot
+      labels:
+        app: nginx-netshoot
     spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: nginx-netshoot
-    template:
-        metadata:
-        labels:
-            app: nginx-netshoot
-        spec:
-            containers:
-            - name: nginx
-            image: nginx:1.14.2
-            ports:
-                - containerPort: 80
-            - name: netshoot
-            image: habolanos/netshoot
-            command: ["/bin/bash"]
-            args: ["-c", "while true; do ping localhost; sleep 1800;done"]
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          ports:
+            - containerPort: 80
+        - name: netshoot
+          image: habolanos/netshoot
+          command: ["/bin/bash"]
+          args: ["-c", "while true; do ping localhost; sleep 1800;done"]
+
 
     $ kubectl apply -f netshoot-sidecar.yaml
       deployment.apps/nginx-netshoot created
